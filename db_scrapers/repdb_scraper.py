@@ -16,8 +16,5 @@ def scrape_repdb_domains():
     return results
 
 results = scrape_repdb_domains();
-x=0
-
-for item in results:
-    x+=1
+for x, item in enumerate(results, start=1):
     print("{0}/{1}: {2}".format(x,len(results),item))

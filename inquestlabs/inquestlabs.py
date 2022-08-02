@@ -30,7 +30,7 @@ if __name__ == "__main__":
     if(args.key):
         labs.set_API_key(args.key)
 
-    if(args.full):
+    if args.full:
         if(args.verbose): print("Pulling in iocs from iocdb and repdb...")
 
         for ioc in labs.aggregate_labs_iocs():
@@ -49,12 +49,11 @@ if __name__ == "__main__":
                 except Exception as e:
                     if(args.verbose): print(e)
 
-    elif (args.list):
+    elif args.list:
         with open(args.list) as f:
             for line in f:
                 line=line.strip("\n")
-                ioc={}
-                ioc["ioc"]=line.split(",")[0]
+                ioc = {"ioc": line.split(",")[0]}
                 ioc["type"]=line.split(",")[1]
                 fname=ioc["ioc"].replace("/","_")
 
@@ -73,26 +72,31 @@ if __name__ == "__main__":
                                 status = labs.download_dfi_artifact_by_hash(h,path=fname)
                     except Exception as e:
                         pass
-    elif(args.hash):
-        if(args.verbose): print("Downloading hash: "+args.hash)
+    elif args.hash:
+        if args.verbose:
+            print(f"Downloading hash: {args.hash}")
         labs.download_dfi_artifact_by_hash(args.hash)
-    elif(args.url):
-        if(args.verbose): print("Getting associated hashes for: "+args.url)
+    elif args.url:
+        if args.verbose:
+            print(f"Getting associated hashes for: {args.url}")
         res = labs.request_dfi_url(args.url)
         for h in res:
             print(res)
-    elif(args.ip):
-        if(args.verbose): print("Getting associated hashes for: "+args.ip)
+    elif args.ip:
+        if args.verbose:
+            print(f"Getting associated hashes for: {args.ip}")
         res = labs.request_dfi_ip(args.ip)
         for h in res:
             print(res)
-    elif(args.domain):
-        if(args.verbose): print("Getting associated hashes for: "+args.domain)
+    elif args.domain:
+        if args.verbose:
+            print(f"Getting associated hashes for: {args.domain}")
         res = labs.request_dfi_domain(args.domain)
         for h in res:
             print(res)
-    elif(args.embedded):
-        if(args.verbose): print("Getting associated hashes for: "+args.embedded)
+    elif args.embedded:
+        if args.verbose:
+            print(f"Getting associated hashes for: {args.embedded}")
         res = labs.search_dfi_embedded_logic(args.embedded)
         for h in res:
             print(res)
